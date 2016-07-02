@@ -34,46 +34,46 @@ alm.env$db$pnl %>%
 
 
 
-for (iLoop in 1:length(rdt)) {
+for (iLoop in 1:length(alm.env$rdt)) {
   # Sums
   alm.env$db$pnl %>%
     filter(NombreFamilia %in% alm.env$portnames$main) %>%
-    filter(Fecha %within% rdt[[iLoop]]) %>%
+    filter(Fecha %within% alm.env$rdt[[iLoop]]) %>%
     filter(variable %in% alm.env$vartype$sums) %>%
     group_by(NombreFamilia, variable) %>%
     summarise(value = sum(value)) %>%
-    mutate(periodo = names(rdt)[iLoop], type = 'suma') %>%
+    mutate(periodo = names(alm.env$rdt)[iLoop], type = 'suma') %>%
     asReport('metricas_periodicas', append = TRUE)
   
   # Means
   alm.env$db$pnl %>%
     filter(NombreFamilia %in% alm.env$portnames$main) %>%
-    filter(Fecha %within% rdt[[iLoop]]) %>%
+    filter(Fecha %within% alm.env$rdt[[iLoop]]) %>%
     filter(variable %in% alm.env$vartype$avgs) %>%
     group_by(NombreFamilia, variable) %>%
     summarise(value = mean(value)) %>%
-    mutate(periodo = names(rdt)[iLoop], type = 'promedio') %>%
+    mutate(periodo = names(alm.env$rdt)[iLoop], type = 'promedio') %>%
     asReport('metricas_periodicas', append = TRUE)
   
   # Max
   alm.env$db$pnl %>%
     filter(NombreFamilia %in% alm.env$portnames$main) %>%
-    filter(Fecha %within% rdt[[iLoop]]) %>%
+    filter(Fecha %within% alm.env$rdt[[iLoop]]) %>%
     filter(variable %in% alm.env$vartype$avgs) %>%
     group_by(NombreFamilia, variable) %>%
     summarise(value = max(value)) %>%
-    mutate(periodo = names(rdt)[iLoop], type = 'maximos') %>%
+    mutate(periodo = names(alm.env$rdt)[iLoop], type = 'maximos') %>%
     asReport('metricas_periodicas', append = TRUE)
   
   
   # Prod
   alm.env$db$pnl %>%
     filter(NombreFamilia %in% alm.env$portnames$main) %>%
-    filter(Fecha %within% rdt[[iLoop]]) %>%
+    filter(Fecha %within% alm.env$rdt[[iLoop]]) %>%
     filter(variable %in% alm.env$vartype$prods) %>%
     group_by(NombreFamilia, variable) %>%
     summarise(value = prod(value) - 1) %>%
-    mutate(periodo = names(rdt)[iLoop], type = 'productos') %>%
+    mutate(periodo = names(alm.env$rdt)[iLoop], type = 'productos') %>%
     asReport('metricas_periodicas', append = TRUE)
   
 }
